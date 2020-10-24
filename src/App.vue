@@ -1,28 +1,53 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main>
+    <film-list :films="films"></film-list>
+    <!-- "films" comes from the data array -->
+    <film-detail v-if="selectedFilm" :film="selectedFilm"></film-detail>
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FilmList from '@/components/filmList';
+import FilmDetail from '@/components/filmDetail';
+import { eventBus } from '@/main.js'
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      films: [],
+      characters: [],
+      selectedFilm: null
+    };
+  },
+
+  mounted() {
+      this.fetchData();
+
+      eventBus.$on('film-selected', (film) => {
+        this.selectedFilm = film;
+      });
+  },
+  methods: {
+    fetchData: function() {
+      fetch("https://ghibliapi.herokuapp.com/films")
+      .then(res => res.json())
+      .then(films => this.films = films);
+
+      fetch("https://ghibliapi.herokuapp.com/people")
+      .then(res => res.json())
+      .then(characters => this.characters = characters);
+    }
+  },
+
   components: {
-    HelloWorld
+    FilmList,
+    FilmDetail
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+main {
+  
 }
 </style>
