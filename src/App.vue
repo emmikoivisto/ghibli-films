@@ -3,20 +3,25 @@
     <film-list :films="films"></film-list>
     <!-- "films" comes from the data array -->
     <film-detail v-if="selectedFilm" :film="selectedFilm"></film-detail>
+    
+
   </main>
 </template>
 
 <script>
 import FilmList from '@/components/filmList';
 import FilmDetail from '@/components/filmDetail';
-import { eventBus } from '@/main.js'
+import favouriteFilms from '@/components/favouriteFilms';
+import { eventBus } from '@/main.js';
+
 
 export default {
   data() {
     return {
       films: [],
-      characters: [],
-      selectedFilm: null
+      people: [],
+      selectedFilm: null,
+      favouriteFilms: []
     };
   },
 
@@ -35,19 +40,27 @@ export default {
 
       fetch("https://ghibliapi.herokuapp.com/people")
       .then(res => res.json())
-      .then(characters => this.characters = characters);
+      .then(people => this.people = people);
+    },
+
+    addToFavourites: function() {
+      this.favouriteFilms.push(this.selectedFilm)
     }
   },
 
   components: {
     FilmList,
-    FilmDetail
+    FilmDetail,
+    favouriteFilms
   }
 }
 </script>
 
 <style scoped>
 main {
-  
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 7fr 13fr;
+
 }
 </style>
