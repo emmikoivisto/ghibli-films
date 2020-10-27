@@ -12,7 +12,7 @@
     <div>
         <h3>List of characters</h3>
         <ul>
-            <li v-for="(people, index) in people" :key=index :value="people">{{film.people.name}}</li>
+            <li v-for="(people, index) in people" :key=index :value="people">{{people.name}}</li>
         </ul>
     </div>
   </article>
@@ -22,7 +22,7 @@
 
 export default {
     name: 'film-detail',
-    props: ['film']
+    props: ['film', 'people']
 
 }
 </script>

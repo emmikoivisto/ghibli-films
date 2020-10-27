@@ -2,9 +2,7 @@
   <main>
     <film-list :films="films"></film-list>
     <!-- "films" comes from the data array -->
-    <film-detail v-if="selectedFilm" :film="selectedFilm"></film-detail>
-    
-
+    <film-detail v-if="selectedFilm" :film="selectedFilm"  :people="people"></film-detail>
   </main>
 </template>
 
